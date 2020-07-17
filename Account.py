@@ -3,11 +3,12 @@ from typing import List
 import requests
 import json
 from config import BASE_URL, headers
+from Exceptions import ProviderEmptyError
 
 
 class Account:
     def __init__(self, login, account_desc="", contract_info="", devices_per_account_limit=None, enabled=True,
-                 fullname="", main_address="", pin_md5="", remote_custom_field="", provider=None, id=None):
+                 fullname="", main_address="", pin_md5="", remote_custom_field="", provider=None, account_id=None):
 
         self.login = login
         self.fullname = fullname
@@ -19,11 +20,12 @@ class Account:
         self.pin_md5 = pin_md5
         self.remote_custom_field = remote_custom_field
         self.provider = provider
-        if id:
-            self.id = id
+        if account_id:
+            self.id = account_id
 
     @staticmethod
     def _dict_to_object(account_dict: dict) -> object:
+        # Fixme: change to method get for dict
         a: Account = Account(login=account_dict["login"],
                              account_desc=account_dict["account_desc"],
                              contract_info=account_dict["contract_info"],
@@ -34,7 +36,7 @@ class Account:
                              pin_md5=account_dict["pin_md5"],
                              remote_custom_field=account_dict["remote_custom_field"],
                              provider=account_dict["provider"],
-                             id=account_dict["id"])
+                             account_id=account_dict["id"])
 
         return a
 
@@ -58,10 +60,79 @@ class Account:
 
         return a
 
+    def update(self, account_id):
+        """
+
+        :type account_id: int
+        :rtype: object
+        """
+        if self.provider is None:
+            raise ProviderEmptyError("Provider can\'t be empty")
+
+        account = json.dumps(self.__dict__)
+
+        try:
+            r = requests.put(BASE_URL + "accounts/" + str(account_id), headers=headers, data=account)
+        except Exception as e:
+            # Fixme: add to logging
+            print(e)
+            return None
+
+        if r.status_code != 200:
+            # Fixme: add to logging
+            print("http status code: {}".format(r.status_code))
+            return None
+
+        resp = json.loads(r.text)
+        a = Account._dict_to_object(resp)
+
+        return a
+
+    @staticmethod
+    def delete(account_id):
+        """
+
+        :type account_id: int
+        :rtype: int
+        """
+
+        try:
+            r = requests.delete(BASE_URL + "accounts/" + str(account_id), headers=headers)
+        except Exception as e:
+            # Fixme: add to logging
+            print(e)
+            return None
+
+        if r.status_code != 200:
+            # Fixme: add to logging
+            print("http status code: {}".format(r.status_code))
+            return None
+
+        return r.status_code
+
+    @staticmethod
+    def get_account(account_id):
+        try:
+            r = requests.get(BASE_URL + "accounts/" + str(account_id), headers=headers)
+        except Exception as e:
+            # Fixme: add to logging
+            print(e)
+            return None
+
+        if r.status_code != 200:
+            # Fixme: add to logging
+            print("http status code: {}".format(r.status_code))
+            return None
+
+        resp = json.loads(r.text)
+        a = Account._dict_to_object(resp)
+
+        return a
+
     @staticmethod
     def get_accounts(start=0, limit=50, sort="", provider=None, enabled=None, login=None,
                      remote_custom_field="", quick_search=""):
-        accounts: List[Account] = []
+        accounts: List[object] = []
 
         query = "?start={}&limit={}".format(start, limit)
 
