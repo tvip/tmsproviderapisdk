@@ -4,7 +4,7 @@ class Error(Exception):
 
 class ProviderEmptyError(Error):
 
-    def __init__(self, message: str) -> object:
+    def __init__(self, message):
         self.message = message
 
     def __str__(self):
@@ -12,7 +12,15 @@ class ProviderEmptyError(Error):
 
 
 class DeviceIdEmptyError(Error):
-    def __init__(self, message: str) -> object:
+    def __init__(self, message):
+        self.message = message
+
+    def __str__(self):
+        return self.message
+
+
+class SubsriptionIdEmptyError(Error):
+    def __init__(self, message):
         self.message = message
 
     def __str__(self):
