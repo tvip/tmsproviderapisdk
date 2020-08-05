@@ -139,11 +139,11 @@ class Device:
         if sort:
             query += "&sort={}".format(sort)
         if account:
-            query += "&provider={}".format(account)
+            query += "&account={}".format(account)
         if device_type:
-            query += "&enabled={}".format(device_type)
+            query += "&device_type={}".format(device_type)
         if provider:
-            query += "&login={}".format(provider)
+            query += "&provider={}".format(provider)
         if quick_search:
             query += "&quick_search={}".format(quick_search)
         if remote_custom_field:

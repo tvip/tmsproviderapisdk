@@ -54,7 +54,7 @@ class DeviceSubscription:
         if sort:
             query += "&sort={}".format(sort)
         if device:
-            query += "&account={}".format(device)
+            query += "&device={}".format(device)
         if tarif:
             query += "&tarif={}".format(tarif)
         if quick_search:

@@ -56,7 +56,7 @@ class Provider:
         query = "?start={}&limit={}".format(start, limit)
 
         if sort:
-            query += "&enabled={}".format(sort)
+            query += "&sort={}".format(sort)
         if enabled:
             query += "&enabled={}".format(enabled)
         if quick_search:
