@@ -25,3 +25,10 @@ class SubsriptionIdEmptyError(Error):
 
     def __str__(self):
         return self.message
+
+class TarifIdEmptyError(Error):
+    def __init__(self, message):
+        self.message = message
+
+    def __str__(self):
+        return self.message
