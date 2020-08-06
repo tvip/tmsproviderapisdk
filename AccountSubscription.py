@@ -2,6 +2,7 @@ import requests
 from config import BASE_URL
 from config import headers
 import json
+from Exceptions import SubsriptionIdEmptyError
 
 
 class AccountSubscription:
@@ -30,6 +31,31 @@ class AccountSubscription:
 
         resp = json.loads(r.text)
         print(resp)
+        account_s = AccountSubscription._dict_to_object(resp)
+
+        return account_s
+
+    def update(self):
+        if self.id is None:
+            raise SubsriptionIdEmptyError("Subscription Id cannot be empty")
+
+        account_subscription = json.dumps(self.__dict__)
+
+        try:
+            r = requests.put(BASE_URL + "account_subscriptions/" + str(self.id), headers=headers,
+                             data=account_subscription)
+
+        except Exception as e:
+            # Fixme: add to logging
+            print(e)
+            return None
+
+        if r.status_code != 200:
+            # Fixme: add to logging
+            print("http status code: {}".format(r.status_code))
+            return None
+
+        resp = json.loads(r.text)
         account_s = AccountSubscription._dict_to_object(resp)
 
         return account_s

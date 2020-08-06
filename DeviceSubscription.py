@@ -34,6 +34,31 @@ class DeviceSubscription:
 
         return device_s
 
+    def update(self):
+        if self.id is None:
+            raise SubsriptionIdEmptyError("Subscription Id cannot be empty")
+
+        device_subscription = json.dumps(self.__dict__)
+
+        try:
+            r = requests.put(BASE_URL + "device_subscriptions/" + str(self.id), headers=headers,
+                             data=device_subscription)
+
+        except Exception as e:
+            # Fixme: add to logging
+            print(e)
+            return None
+
+        if r.status_code != 200:
+            # Fixme: add to logging
+            print("http status code: {}".format(r.status_code))
+            return None
+
+        resp = json.loads(r.text)
+        device_s = DeviceSubscription._dict_to_object(resp)
+
+        return device_s
+
     @staticmethod
     def _dict_to_object(as_dict):
         device_subscription = DeviceSubscription(
