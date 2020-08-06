@@ -60,6 +60,24 @@ class AccountSubscription:
 
         return account_s
 
+    def delete(self):
+        if self.id is None:
+            raise SubsriptionIdEmptyError("Subsription Id cannot be empty")
+
+        try:
+            r = requests.delete(BASE_URL + "account_subscriptions/" + str(self.id), headers=headers)
+        except Exception as e:
+            # Fixme: add to logging
+            print(e)
+            return None
+
+        if r.status_code != 200:
+            # Fixme: add to logging
+            print("http status code: {}".format(r.status_code))
+            return None
+
+        return r.status_code
+
     @staticmethod
     def _dict_to_object(as_dict):
         account_subscription = AccountSubscription(
@@ -134,28 +152,6 @@ class AccountSubscription:
         account_s = AccountSubscription._dict_to_object(resp)
 
         return account_s
-
-    @staticmethod
-    def delete(subscription_id):
-        """
-
-        :type subscription_id: int
-        :rtype: int
-        """
-
-        try:
-            r = requests.delete(BASE_URL + "account_subscriptions/" + str(subscription_id), headers=headers)
-        except Exception as e:
-            # Fixme: add to logging
-            print(e)
-            return None
-
-        if r.status_code != 200:
-            # Fixme: add to logging
-            print("http status code: {}".format(r.status_code))
-            return None
-
-        return r.status_code
 
     def __str__(self):
         return """id:{}, account:{}, start:{}, stop:{}, tarif:{}""".format(

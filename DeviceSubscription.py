@@ -59,6 +59,23 @@ class DeviceSubscription:
 
         return device_s
 
+    def delete(self):
+        if self.id is None:
+            raise SubsriptionIdEmptyError("Subsription Id can\'t be empty")
+        try:
+            r = requests.delete(BASE_URL + "device_subscriptions/" + str(self.id), headers=headers)
+        except Exception as e:
+            # Fixme: add to logging
+            print(e)
+            return None
+
+        if r.status_code != 200:
+            # Fixme: add to logging
+            print("http status code: {}".format(r.status_code))
+            return None
+
+        return r.status_code
+
     @staticmethod
     def _dict_to_object(as_dict):
         device_subscription = DeviceSubscription(
@@ -133,23 +150,6 @@ class DeviceSubscription:
         device_s = DeviceSubscription._dict_to_object(resp)
 
         return device_s
-
-    def delete(self):
-        if self.id is None:
-            raise SubsriptionIdEmptyError("Subsription Id can\'t be empty")
-        try:
-            r = requests.delete(BASE_URL + "device_subscriptions/" + str(self.id), headers=headers)
-        except Exception as e:
-            # Fixme: add to logging
-            print(e)
-            return None
-
-        if r.status_code != 200:
-            # Fixme: add to logging
-            print("http status code: {}".format(r.status_code))
-            return None
-
-        return r.status_code
 
     def __str__(self):
         return """id:{}, device:{}, start:{}, stop:{}, tarif:{}""".format(

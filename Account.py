@@ -3,7 +3,7 @@ from typing import List
 import requests
 import json
 from config import BASE_URL, headers
-from Exceptions import ProviderEmptyError
+from Exceptions import ProviderEmptyError, AccountIdEmptyError
 
 
 class Account:
@@ -60,19 +60,16 @@ class Account:
 
         return a
 
-    def update(self, account_id):
-        """
-
-        :type account_id: int
-        :rtype: object
-        """
+    def update(self):
+        if self.id is None:
+            raise AccountIdEmptyError("Account Id cannot be empty")
         if self.provider is None:
-            raise ProviderEmptyError("Provider can\'t be empty")
+            raise ProviderEmptyError("Provider cannot be empty")
 
         account = json.dumps(self.__dict__)
 
         try:
-            r = requests.put(BASE_URL + "accounts/" + str(account_id), headers=headers, data=account)
+            r = requests.put(BASE_URL + "accounts/" + str(self.id), headers=headers, data=account)
         except Exception as e:
             # Fixme: add to logging
             print(e)
@@ -88,16 +85,12 @@ class Account:
 
         return a
 
-    @staticmethod
-    def delete(account_id):
-        """
-
-        :type account_id: int
-        :rtype: int
-        """
+    def delete(self):
+        if self.id is None:
+            raise AccountIdEmptyError("Account Id cannot be empty")
 
         try:
-            r = requests.delete(BASE_URL + "accounts/" + str(account_id), headers=headers)
+            r = requests.delete(BASE_URL + "accounts/" + str(self.id), headers=headers)
         except Exception as e:
             # Fixme: add to logging
             print(e)
