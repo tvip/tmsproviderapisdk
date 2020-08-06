@@ -3,7 +3,7 @@ import requests
 import json
 
 
-class Channels:
+class Channel:
 
     def __init__(self, channel_id, name="", text_name="", display_number="", logo_url="", enabled=False,
                  time_shift_depth=None):
@@ -17,7 +17,7 @@ class Channels:
 
     @staticmethod
     def _dict_to_object(channel_dict):
-        channel = Channels(
+        channel = Channel(
             channel_id=channel_dict["id"],
             name=channel_dict["name"],
             text_name=channel_dict["text_name"],
@@ -44,7 +44,7 @@ class Channels:
 
         resp = json.loads(r.text)
         print(resp)
-        c = Channels._dict_to_object(resp)
+        c = Channel._dict_to_object(resp)
 
         return c
 
@@ -86,7 +86,7 @@ class Channels:
             return None
 
         for ra in resp["data"]:
-            channel = Channels._dict_to_object(ra)
+            channel = Channel._dict_to_object(ra)
             channels.append(channel)
 
         return channels
