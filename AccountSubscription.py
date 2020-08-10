@@ -2,7 +2,7 @@ import requests
 from config import BASE_URL
 from config import headers
 import json
-from Exceptions import SubsriptionIdEmptyError
+from Exceptions import SubsriptionIdEmptyError, ApiHTTPError
 
 
 class AccountSubscription:
@@ -20,17 +20,14 @@ class AccountSubscription:
         try:
             r = requests.post(BASE_URL + "account_subscriptions", headers=headers, data=account_subscription)
         except Exception as e:
-            # Fixme: add to logging
             print(e)
             return None
 
         if r.status_code != 200:
-            # Fixme: add to logging
-            print("http status code: {}".format(r.status_code))
-            return None
+            raise ApiHTTPError("Create AccountSubscription", r.text)
 
         resp = json.loads(r.text)
-        print(resp)
+
         account_s = AccountSubscription._dict_to_object(resp)
 
         return account_s
@@ -46,14 +43,11 @@ class AccountSubscription:
                              data=account_subscription)
 
         except Exception as e:
-            # Fixme: add to logging
             print(e)
             return None
 
         if r.status_code != 200:
-            # Fixme: add to logging
-            print("http status code: {}".format(r.status_code))
-            return None
+            raise ApiHTTPError("Update AccountSubscription", r.text)
 
         resp = json.loads(r.text)
         account_s = AccountSubscription._dict_to_object(resp)
@@ -67,14 +61,11 @@ class AccountSubscription:
         try:
             r = requests.delete(BASE_URL + "account_subscriptions/" + str(self.id), headers=headers)
         except Exception as e:
-            # Fixme: add to logging
             print(e)
             return None
 
         if r.status_code != 200:
-            # Fixme: add to logging
-            print("http status code: {}".format(r.status_code))
-            return None
+            raise ApiHTTPError("Delete AccountSubscription", r.text)
 
         return r.status_code
 
@@ -107,19 +98,15 @@ class AccountSubscription:
         try:
             r = requests.get(BASE_URL + "account_subscriptions" + query, headers=headers)
         except Exception as e:
-            # Fixme: add to logging
             print(e)
             return None
 
         if r.status_code != 200:
-            # Fixme: add to logging
-            print("http status code: {}".format(r.status_code))
-            return None
+            raise ApiHTTPError("Get AccountSubscriptions", r.text)
 
         try:
             resp = json.loads(r.text)
         except Exception as e:
-            # Fixme: add to logging
             print(e)
             return None
 
@@ -139,14 +126,11 @@ class AccountSubscription:
         try:
             r = requests.get(BASE_URL + "account_subscriptions/" + str(subscription_id), headers=headers)
         except Exception as e:
-            # Fixme: add to logging
             print(e)
             return None
 
         if r.status_code != 200:
-            # Fixme: add to logging
-            print("http status code: {}".format(r.status_code))
-            return None
+            raise ApiHTTPError("Get AccountSubscription", r.text)
 
         resp = json.loads(r.text)
         account_s = AccountSubscription._dict_to_object(resp)

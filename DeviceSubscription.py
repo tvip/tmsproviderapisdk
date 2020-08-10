@@ -1,4 +1,4 @@
-from Exceptions import SubsriptionIdEmptyError
+from Exceptions import SubsriptionIdEmptyError, ApiHTTPError
 import json
 from config import BASE_URL, headers
 import requests
@@ -19,14 +19,11 @@ class DeviceSubscription:
         try:
             r = requests.post(BASE_URL + "device_subscriptions", headers=headers, data=device_subscription)
         except Exception as e:
-            # Fixme: add to logging
             print(e)
             return None
 
         if r.status_code != 200:
-            # Fixme: add to logging
-            print("http status code: {}".format(r.status_code))
-            return None
+            raise ApiHTTPError("Create DeviceSubscription", r.text)
 
         resp = json.loads(r.text)
         print(resp)
@@ -45,14 +42,11 @@ class DeviceSubscription:
                              data=device_subscription)
 
         except Exception as e:
-            # Fixme: add to logging
             print(e)
             return None
 
         if r.status_code != 200:
-            # Fixme: add to logging
-            print("http status code: {}".format(r.status_code))
-            return None
+            raise ApiHTTPError("Update DeviceSubscription", r.text)
 
         resp = json.loads(r.text)
         device_s = DeviceSubscription._dict_to_object(resp)
@@ -65,14 +59,11 @@ class DeviceSubscription:
         try:
             r = requests.delete(BASE_URL + "device_subscriptions/" + str(self.id), headers=headers)
         except Exception as e:
-            # Fixme: add to logging
             print(e)
             return None
 
         if r.status_code != 200:
-            # Fixme: add to logging
-            print("http status code: {}".format(r.status_code))
-            return None
+            raise ApiHTTPError("Delete DeviceSubscription", r.text)
 
         return r.status_code
 
@@ -105,14 +96,11 @@ class DeviceSubscription:
         try:
             r = requests.get(BASE_URL + "device_subscriptions" + query, headers=headers)
         except Exception as e:
-            # Fixme: add to logging
             print(e)
             return None
 
         if r.status_code != 200:
-            # Fixme: add to logging
-            print("http status code: {}".format(r.status_code))
-            return None
+            raise ApiHTTPError("Get DeviceSubscriptions", r.text)
 
         try:
             resp = json.loads(r.text)
@@ -122,7 +110,6 @@ class DeviceSubscription:
             return None
 
         if not resp.get("data"):
-            # Fixme: add to logging
             print("Responce not have data, responce: {}".format(r.text))
             return None
 
@@ -137,14 +124,11 @@ class DeviceSubscription:
         try:
             r = requests.get(BASE_URL + "device_subscriptions/" + str(subscription_id), headers=headers)
         except Exception as e:
-            # Fixme: add to logging
             print(e)
             return None
 
         if r.status_code != 200:
-            # Fixme: add to logging
-            print("http status code: {}".format(r.status_code))
-            return None
+            raise ApiHTTPError("Get DeviceSubscription", r.text)
 
         resp = json.loads(r.text)
         device_s = DeviceSubscription._dict_to_object(resp)

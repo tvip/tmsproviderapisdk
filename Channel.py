@@ -1,6 +1,7 @@
 from config import BASE_URL, headers
 import requests
 import json
+from Exceptions import ApiHTTPError
 
 
 class Channel:
@@ -33,14 +34,11 @@ class Channel:
         try:
             r = requests.get(BASE_URL + "channels/" + str(channel_id), headers=headers)
         except Exception as e:
-            # Fixme: add to logging
             print(e)
             return None
 
         if r.status_code != 200:
-            # Fixme: add to logging
-            print("http status code: {}".format(r.status_code))
-            return None
+            raise ApiHTTPError("Get Channel", r.text)
 
         resp = json.loads(r.text)
         print(resp)
@@ -64,24 +62,19 @@ class Channel:
         try:
             r = requests.get(BASE_URL + "channels", headers=headers)
         except Exception as e:
-            # Fixme: add to logging
             print(e)
             return None
 
         if r.status_code != 200:
-            # Fixme: add to logging
-            print("http status code: {}".format(r.status_code))
-            return None
+            raise ApiHTTPError("Get Channels", r.text)
 
         try:
             resp = json.loads(r.text)
         except Exception as e:
-            # Fixme: add to logging
             print(e)
             return None
 
         if not resp.get("data"):
-            # Fixme: add to logging
             print("Responce not have data, responce: {}".format(r.text))
             return None
 

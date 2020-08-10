@@ -3,7 +3,7 @@ from typing import List
 import requests
 import json
 from config import BASE_URL, headers
-from Exceptions import ProviderEmptyError, AccountIdEmptyError
+from Exceptions import ProviderEmptyError, AccountIdEmptyError, ApiHTTPError
 
 
 class Account:
@@ -25,7 +25,6 @@ class Account:
 
     @staticmethod
     def _dict_to_object(account_dict: dict) -> object:
-        # Fixme: change to method get for dict
         a: Account = Account(login=account_dict["login"],
                              account_desc=account_dict["account_desc"],
                              contract_info=account_dict["contract_info"],
@@ -46,14 +45,11 @@ class Account:
         try:
             r = requests.post(BASE_URL + "accounts", headers=headers, data=account)
         except Exception as e:
-            # Fixme: add to logging
             print(e)
             return None
 
         if r.status_code != 200:
-            # Fixme: add to logging
-            print("http status code: {}".format(r.status_code))
-            return None
+            raise ApiHTTPError("Create account", r.text)
 
         resp = json.loads(r.text)
         a = Account._dict_to_object(resp)
@@ -76,9 +72,7 @@ class Account:
             return None
 
         if r.status_code != 200:
-            # Fixme: add to logging
-            print("http status code: {}".format(r.status_code))
-            return None
+            raise ApiHTTPError("Update account", r.text)
 
         resp = json.loads(r.text)
         a = Account._dict_to_object(resp)
@@ -92,14 +86,11 @@ class Account:
         try:
             r = requests.delete(BASE_URL + "accounts/" + str(self.id), headers=headers)
         except Exception as e:
-            # Fixme: add to logging
             print(e)
             return None
 
         if r.status_code != 200:
-            # Fixme: add to logging
-            print("http status code: {}".format(r.status_code))
-            return None
+            raise ApiHTTPError("Delete account", r.text)
 
         return r.status_code
 
@@ -108,14 +99,11 @@ class Account:
         try:
             r = requests.get(BASE_URL + "accounts/" + str(account_id), headers=headers)
         except Exception as e:
-            # Fixme: add to logging
             print(e)
             return None
 
         if r.status_code != 200:
-            # Fixme: add to logging
-            print("http status code: {}".format(r.status_code))
-            return None
+            raise ApiHTTPError("Get account", r.text)
 
         resp = json.loads(r.text)
         a = Account._dict_to_object(resp)
@@ -150,14 +138,11 @@ class Account:
             return None
 
         if r.status_code != 200:
-            # Fixme: add to logging
-            print("http status code: {}".format(r.status_code))
-            return None
+            raise ApiHTTPError("Get accounts", r.text)
 
         try:
             resp = json.loads(r.text)
         except Exception as e:
-            # Fixme: add to logging
             print(e)
             return None
 

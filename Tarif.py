@@ -1,7 +1,7 @@
 import json
 import requests
 from config import BASE_URL, headers
-from Exceptions import TarifIdEmptyError
+from Exceptions import TarifIdEmptyError, ApiHTTPError
 
 
 class Tarif:
@@ -18,14 +18,11 @@ class Tarif:
         try:
             r = requests.post(BASE_URL + "tarifs", headers=headers, data=tarif)
         except Exception as e:
-            # Fixme: add to logging
             print(e)
             return None
 
         if r.status_code != 200:
-            # Fixme: add to logging
-            print("http status code: {}".format(r.status_code))
-            return None
+            raise ApiHTTPError("Create Tarif", r.text)
 
         resp = json.loads(r.text)
         t = Tarif._dict_to_object(resp)
@@ -34,21 +31,18 @@ class Tarif:
 
     def update(self):
         if self.id is None:
-            raise TarifIdEmptyError("Tarif Id can\'t be empty")
+            raise TarifIdEmptyError("Tarif Id cannot be empty")
 
         tarif = json.dumps(self.__dict__)
 
         try:
             r = requests.put(BASE_URL + "tarifs/" + str(self.id), headers=headers, data=tarif)
         except Exception as e:
-            # Fixme: add to logging
             print(e)
             return None
 
         if r.status_code != 200:
-            # Fixme: add to logging
-            print("http status code: {}".format(r.status_code))
-            return None
+            raise ApiHTTPError("Update Tarif", r.text)
 
         resp = json.loads(r.text)
         t = Tarif._dict_to_object(resp)
@@ -62,14 +56,11 @@ class Tarif:
         try:
             r = requests.delete(BASE_URL + "tarifs/" + str(self.id), headers=headers)
         except Exception as e:
-            # Fixme: add to logging
             print(e)
             return None
 
         if r.status_code != 200:
-            # Fixme: add to logging
-            print("http status code: {}".format(r.status_code))
-            return None
+            raise ApiHTTPError("Delete Tarif", r.text)
 
         return r.status_code
 
@@ -90,20 +81,16 @@ class Tarif:
         try:
             r = requests.get(BASE_URL + "tarifs/" + str(tarif_id), headers=headers)
         except Exception as e:
-            # Fixme: add to logging
             print(e)
             return None
 
         if r.status_code != 200:
-            # Fixme: add to logging
-            print("http status code: {}".format(r.status_code))
-            return None
+            raise ApiHTTPError("Get Tarif", r.text)
 
         resp = json.loads(r.text)
         t = Tarif._dict_to_object(resp)
 
         return t
-
 
     @staticmethod
     def get_tarifs(start=0, limit=50, sort="", channel=None, enabled=None, provider=None,
@@ -129,24 +116,19 @@ class Tarif:
         try:
             r = requests.get(BASE_URL + "tarifs" + query, headers=headers)
         except Exception as e:
-            # Fixme: add to logging
             print(e)
             return None
 
         if r.status_code != 200:
-            # Fixme: add to logging
-            print("http status code: {}".format(r.status_code))
-            return None
+            raise ApiHTTPError("Get Tarifs", r.text)
 
         try:
             resp = json.loads(r.text)
         except Exception as e:
-            # Fixme: add to logging
             print(e)
             return None
 
         if not resp.get("data"):
-            # Fixme: add to logging
             print("Responce not have data, responce: {}".format(r.text))
             return None
 

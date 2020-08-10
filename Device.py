@@ -1,7 +1,7 @@
 import requests
 from config import BASE_URL, headers
 import json
-from Exceptions import DeviceIdEmptyError
+from Exceptions import DeviceIdEmptyError, ApiHTTPError
 
 
 class Device:
@@ -32,15 +32,11 @@ class Device:
         try:
             r = requests.post(BASE_URL + "devices", headers=headers, data=device)
         except Exception as e:
-            # Fixme: add to logging
             print(e)
             return None
 
         if r.status_code != 200:
-            # Fixme: add to logging
-            print(r.text)
-            print("http status code: {}, text: {}".format(r.status_code, r.text))
-            return None
+            raise ApiHTTPError("Create Device", r.text)
 
         resp = json.loads(r.text)
         d = Device._dict_to_object(resp)
@@ -56,14 +52,11 @@ class Device:
         try:
             r = requests.put(BASE_URL + "devices/" + str(self.id), headers=headers, data=device)
         except Exception as e:
-            # Fixme: add to logging
             print(e)
             return None
 
         if r.status_code != 200:
-            # Fixme: add to logging
-            print("http status code: {}".format(r.status_code))
-            return None
+            raise ApiHTTPError("Update Device", r.text)
 
         resp = json.loads(r.text)
         d = Device._dict_to_object(resp)
@@ -77,14 +70,11 @@ class Device:
         try:
             r = requests.delete(BASE_URL + "devices/" + str(self.id), headers=headers)
         except Exception as e:
-            # Fixme: add to logging
             print(e)
             return None
 
         if r.status_code != 200:
-            # Fixme: add to logging
-            print("http status code: {}".format(r.status_code))
-            return None
+            raise ApiHTTPError("Delete Device", r.text)
 
         return r.status_code
 
@@ -93,14 +83,11 @@ class Device:
         try:
             r = requests.get(BASE_URL + "devices/" + str(device_id), headers=headers)
         except Exception as e:
-            # Fixme: add to logging
             print(e)
             return None
 
         if r.status_code != 200:
-            # Fixme: add to logging
-            print("http status code: {}".format(r.status_code))
-            return None
+            raise ApiHTTPError("Get Device", r.text)
 
         resp = json.loads(r.text)
         d = Device._dict_to_object(resp)
@@ -154,24 +141,19 @@ class Device:
         try:
             r = requests.get(BASE_URL + "devices" + query, headers=headers)
         except Exception as e:
-            # Fixme: add to logging
             print(e)
             return None
 
         if r.status_code != 200:
-            # Fixme: add to logging
-            print("http status code: {}".format(r.status_code))
-            return None
+            raise ApiHTTPError("Get Devices", r.text)
 
         try:
             resp = json.loads(r.text)
         except Exception as e:
-            # Fixme: add to logging
             print(e)
             return None
 
         if not resp.get("data"):
-            # Fixme: add to logging
             print("Responce not have data, responce: {}".format(r.text))
             return None
 

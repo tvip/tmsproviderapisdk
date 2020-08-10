@@ -1,6 +1,7 @@
 import requests
 import json
 from config import BASE_URL, headers
+from Exceptions import ApiHTTPError
 
 
 class Provider:
@@ -35,14 +36,11 @@ class Provider:
         try:
             r = requests.get(BASE_URL + "providers/" + str(provider_id), headers=headers)
         except Exception as e:
-            # Fixme: add to logging
             print(e)
             return None
 
         if r.status_code != 200:
-            # Fixme: add to logging
-            print("http status code: {}".format(r.status_code))
-            return None
+            raise ApiHTTPError("Get Provider", r.text)
 
         resp = json.loads(r.text)
         p = Provider._dict_to_object(resp)
@@ -65,24 +63,19 @@ class Provider:
         try:
             r = requests.get(BASE_URL + "providers" + query, headers=headers)
         except Exception as e:
-            # Fixme: add to logging
             print(e)
             return None
 
         if r.status_code != 200:
-            # Fixme: add to logging
-            print("http status code: {}".format(r.status_code))
-            return None
+            raise ApiHTTPError("Get Providers", r.text)
 
         try:
             resp = json.loads(r.text)
         except Exception as e:
-            # Fixme: add to logging
             print(e)
             return None
 
         if not resp.get("data"):
-            # Fixme: add to logging
             print("Responce not have data, responce: {}".format(r.text))
             return None
 
