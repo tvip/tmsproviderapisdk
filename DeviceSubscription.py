@@ -105,7 +105,6 @@ class DeviceSubscription:
         try:
             resp = json.loads(r.text)
         except Exception as e:
-            # Fixme: add to logging
             print(e)
             return None
 

@@ -67,7 +67,6 @@ class Account:
         try:
             r = requests.put(BASE_URL + "accounts/" + str(self.id), headers=headers, data=account)
         except Exception as e:
-            # Fixme: add to logging
             print(e)
             return None
 
@@ -133,7 +132,6 @@ class Account:
         try:
             r = requests.get(BASE_URL + "accounts" + query, headers=headers)
         except Exception as e:
-            # Fixme: add to logging
             print(e)
             return None
 
@@ -147,7 +145,6 @@ class Account:
             return None
 
         if not resp.get("data"):
-            # Fixme: add to logging
             print("Responce not have data, responce: {}".format(r.text))
             return None
 
