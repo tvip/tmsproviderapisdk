@@ -6,25 +6,34 @@ class Error(Exception):
 
 
 class ApiHTTPError(Error):
-    def __init__(self, context, text):
+    def __init__(self, context, status_code, response_text):
         self.context = context
-        self.text = text
+        self.status_code = status_code
+        self.response_text = response_text
 
     def __str__(self):
-        text = json.loads(self.text)
-        cause = text["cause"]
-        status_code = text["statusCode"]
-
-        message = "Api HTTP Error on {}, http status code: {}, cause: {}".format(
+        message = "Api HTTP Error on {}, http status code: {}".format(
             self.context,
-            status_code,
-            cause
+            self.status_code
         )
+
+        if 399 < self.status_code < 500:
+            text = json.loads(self.response_text)
+            cause = text.get("cause")
+            if not cause:
+                cause = text.get("error")
+            status_code = text.get("statusCode", self.status_code)
+
+            message = "Api HTTP Error on {}, status code: {}, cause: {}".format(
+                self.context,
+                status_code,
+                cause
+            )
 
         return message
 
 
-class AccountIdEmptyError(Error):
+class IdEmptyError(Error):
 
     def __init__(self, message):
         self.message = message
