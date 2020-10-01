@@ -1,6 +1,6 @@
 from typing import Optional, List
 from tmsproviderapisdk.tms_extended_model import TmsExtendedModel
-
+import hashlib
 
 class TmsAccount(TmsExtendedModel):
     _path_url = '/accounts/'
@@ -18,6 +18,14 @@ class TmsAccount(TmsExtendedModel):
         self.remote_custom_field = remote_custom_field
         self.provider = provider
         self.id = id
+
+    @staticmethod
+    def get_md5_pin(clear_text_password):
+        hash_password = hashlib.md5(clear_text_password.encode())
+        pin_md5 = hash_password.hexdigest()
+
+        return pin_md5
+
 
     @staticmethod
     def _dict_to_object(account_dict: dict) -> object:
