@@ -1,7 +1,7 @@
-from base_model import BaseModel
+from tmsproviderapisdk.tms_base_model import TmsBaseModel
 
 
-class TmsProvider(BaseModel):
+class TmsProvider(TmsBaseModel):
 
     _model_url = "/providers/"
 

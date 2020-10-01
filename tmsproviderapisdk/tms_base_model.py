@@ -1,11 +1,11 @@
 import json
 import requests
-from exceptions import ApiHTTPError, IdEmptyError
-from tms_config import TmsConfigHolder
+from tmsproviderapisdk.tms_config import TmsConfigHolder
+from tmsproviderapisdk.tms_exceptions import ApiHTTPError, IdEmptyError
 from typing import List, Optional, Tuple
 
 
-class BaseModel:
+class TmsBaseModel:
     _model_url: str
 
     def create(self):

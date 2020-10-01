@@ -1,7 +1,7 @@
-from base_model import BaseModel
+from tmsproviderapisdk.tms_base_model import TmsBaseModel
 
 
-class TmsChannel(BaseModel):
+class TmsChannel(TmsBaseModel):
     _model_url = "/channels/"
 
     def __init__(self, id: int, name: str = "", text_name: str = "", display_number: str = "", logo_url: str = "",

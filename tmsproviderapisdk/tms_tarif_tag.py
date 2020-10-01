@@ -1,7 +1,7 @@
-from base_model import BaseModel
+from tmsproviderapisdk.tms_base_model import TmsBaseModel
 
 
-class TmsTarifTag(BaseModel):
+class TmsTarifTag(TmsBaseModel):
     _model_url = "/tarif_tags/"
 
     def __init__(self, enabled, name, provider, id=None, position=None):

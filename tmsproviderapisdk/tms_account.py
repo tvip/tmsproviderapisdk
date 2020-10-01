@@ -1,9 +1,9 @@
 from typing import Optional, List
 
-from base_model import BaseModel
+from tmsproviderapisdk.tms_base_model import TmsBaseModel
 
 
-class TmsAccount(BaseModel):
+class TmsAccount(TmsBaseModel):
     _model_url = '/accounts/'
 
     def __init__(self, login, fullname,account_desc="", contract_info="", devices_per_account_limit=None, enabled=True,
