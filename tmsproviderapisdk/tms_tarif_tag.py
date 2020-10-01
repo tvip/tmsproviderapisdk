@@ -2,7 +2,7 @@ from tmsproviderapisdk.tms_base_model import TmsBaseModel
 
 
 class TmsTarifTag(TmsBaseModel):
-    _model_url = "/tarif_tags/"
+    _path_url = "/tarif_tags/"
 
     def __init__(self, enabled, name, provider, id=None, position=None):
         self.enabled = enabled

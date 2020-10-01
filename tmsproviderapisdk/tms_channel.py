@@ -2,7 +2,7 @@ from tmsproviderapisdk.tms_base_model import TmsBaseModel
 
 
 class TmsChannel(TmsBaseModel):
-    _model_url = "/channels/"
+    _path_url = "/channels/"
 
     def __init__(self, id: int, name: str = "", text_name: str = "", display_number: str = "", logo_url: str = "",
                  enabled: bool = False, time_shift_depth: int = None):

@@ -3,7 +3,7 @@ from tmsproviderapisdk.tms_base_model import TmsBaseModel
 
 class TmsProvider(TmsBaseModel):
 
-    _model_url = "/providers/"
+    _path_url = "/providers/"
 
     def __init__(self, id=None, region_tag=None, provider_name=None, provider_comment=None,
                  enabled=False, logo_url=None, devices_per_account_limit=None):

@@ -1,12 +1,11 @@
 from typing import Optional, List
+from tmsproviderapisdk.tms_extended_model import TmsExtendedModel
 
-from tmsproviderapisdk.tms_base_model import TmsBaseModel
 
+class TmsAccount(TmsExtendedModel):
+    _path_url = '/accounts/'
 
-class TmsAccount(TmsBaseModel):
-    _model_url = '/accounts/'
-
-    def __init__(self, login, fullname,account_desc="", contract_info="", devices_per_account_limit=None, enabled=True,
+    def __init__(self, login, fullname, account_desc="", contract_info="", devices_per_account_limit=None, enabled=True,
                  main_address="", pin_md5="", remote_custom_field="", provider=None, id=None):
         self.login = login
         self.fullname = fullname

@@ -1,8 +1,8 @@
-from tmsproviderapisdk.tms_base_model import TmsBaseModel
+from tmsproviderapisdk.tms_extended_model import TmsExtendedModel
 
 
-class TmsAccountSubscription(TmsBaseModel):
-    _model_url = "/account_subscriptions/"
+class TmsAccountSubscription(TmsExtendedModel):
+    _path_url = "/account_subscriptions/"
 
     def __init__(self, account, start, tarif, id=None, stop=None):
         self.account = account

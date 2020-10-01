@@ -1,8 +1,8 @@
-from tmsproviderapisdk.tms_base_model import TmsBaseModel
+from tmsproviderapisdk.tms_extended_model import TmsExtendedModel
 
 
-class TmsDevice(TmsBaseModel):
-    _model_url = "/devices/"
+class TmsDevice(TmsExtendedModel):
+    _path_url = "/devices/"
 
     def __init__(self, unique_id, device_id=None, ipaddr=None, mac=None, remote_custom_field=None, comment=None,
                  last_online=None, last_fw_ver=None, first_online=None, use_nat=False, operation_system=None,
