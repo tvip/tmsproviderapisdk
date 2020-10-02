@@ -1,7 +1,7 @@
-from tmsproviderapisdk.tms_base_model import TmsBaseModel
+from tmsproviderapisdk.tms_extended_model import TmsExtendedModel
 
 
-class TmsTarif(TmsBaseModel):
+class TmsTarif(TmsExtendedModel):
     _path_url = "/tarifs/"
 
     def __init__(self, tarif_name, tarif_tag, enabled, provider=None, id=None):
