@@ -11,7 +11,7 @@ setuptools.setup(
     description="TVIP TMS provider api sdk",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/tvip/tms_provider_api_sdk",
+    url="https://github.com/tvip/tmsproviderapisdk",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
