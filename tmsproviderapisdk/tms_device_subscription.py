@@ -5,6 +5,14 @@ class TmsDeviceSubscription(TmsExtendedModel):
     _path_url = "/device_subscriptions/"
 
     def __init__(self, device, start, tarif, id=None, stop=None):
+        """
+
+        :param device: int
+        :param start: string
+        :param tarif: int
+        :param id: int
+        :param stop: string
+        """
         self.device = device
         self.start = start
         self.tarif = tarif

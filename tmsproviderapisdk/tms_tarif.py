@@ -5,6 +5,14 @@ class TmsTarif(TmsExtendedModel):
     _path_url = "/tarifs/"
 
     def __init__(self, tarif_name, tarif_tag, enabled, provider=None, id=None):
+        """
+
+        :param tarif_name: str
+        :param tarif_tag: int
+        :param enabled: bool
+        :param provider: int
+        :param id: int
+        """
         self.id = id
         self.tarif_name = tarif_name
         self.provider = provider

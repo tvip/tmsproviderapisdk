@@ -7,7 +7,7 @@ from tmsproviderapisdk.tms_base_model import TmsBaseModel
 
 class TmsExtendedModel(TmsBaseModel):
 
-    def create(self):
+    def create(self) -> object:
         json_data = json.dumps(self.__dict__)
 
         try:
@@ -27,11 +27,9 @@ class TmsExtendedModel(TmsBaseModel):
 
         return o
 
-    def update(self):
+    def update(self) -> object:
         if self.id is None:
             raise IdEmptyError("{} Id cannot be empty".format(self.__class__.__name__))
-        # if self.provider is None:
-        #     raise ProviderEmptyError("Provider cannot be empty")
 
         model = json.dumps(self.__dict__)
 
@@ -50,7 +48,7 @@ class TmsExtendedModel(TmsBaseModel):
 
         return o
 
-    def delete(self):
+    def delete(self) -> int:
         if self.id is None:
             raise IdEmptyError("{} Id cannot be empty".format(self.__class__.__name__))
 

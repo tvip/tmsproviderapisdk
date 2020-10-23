@@ -5,6 +5,14 @@ class TmsAccountSubscription(TmsExtendedModel):
     _path_url = "/account_subscriptions/"
 
     def __init__(self, account, start, tarif, id=None, stop=None):
+        """
+
+        :param account: int
+        :param start: string
+        :param tarif: int
+        :param id: int
+        :param stop: string
+        """
         self.account = account
         self.start = start
         self.tarif = tarif
