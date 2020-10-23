@@ -1,6 +1,9 @@
+from datetime import datetime
+import pytz
 from tmsproviderapisdk import TmsConfig, TmsConfigHolder
 from tmsproviderapisdk import TmsAccount
 from tmsproviderapisdk.tms_exceptions import ApiHTTPError
+from tmsproviderapisdk import TmsAccountSubscription
 
 # Configure
 config = TmsConfig('https://tms.example.com', 'provider_admin', 'provider_password')
@@ -46,3 +49,24 @@ except ApiHTTPError as e:
 else:
     # Delete account
     account.delete()
+
+# Create subscription for account with tarif for example with id 1
+
+# Get account
+account = TmsAccount.get(1)
+# Get now datetime
+now = datetime.now(pytz.timezone('Europe/Moscow'))
+# Datetime to string with format
+now_with_format = now.strftime("%Y-%m-%dT%H:%M:%S%z")
+
+# Create subscription object
+subscription = TmsAccountSubscription(account=account.id, start=now_with_format, tarif=1)
+
+# Create subscription on tms side
+try:
+    subscription = subscription.create()
+except ApiHTTPError as e:
+    print(e)
+else:
+    # print subscription to stout
+    print(subscription)
