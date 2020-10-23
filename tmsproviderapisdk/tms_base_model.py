@@ -9,7 +9,12 @@ class TmsBaseModel:
     _path_url: str
 
     @classmethod
-    def get(cls, id: int) -> object:
+    def get(cls, id):
+        """
+
+        :param id: int
+        :return: object
+        """
         try:
             r = requests.get(TmsConfigHolder.config().base_url + cls._path_url + str(id),
                              headers=TmsConfigHolder.config().headers)

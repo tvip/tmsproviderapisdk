@@ -12,7 +12,7 @@ The TMS provider api SDK provides Python APIs to create and manage accounts, dev
 ## Installation
 Install using pip:
 
-`pip install tmsproviderapisdk`
+`pip3 install tmsproviderapisdk`
 
 ## Usage:
 

@@ -1,10 +1,18 @@
-from tmsproviderapisdk.tms_base_model import TmsBaseModel
+from tmsproviderapisdk.tms_extended_model import TmsExtendedModel
 
 
-class TmsTarif(TmsBaseModel):
+class TmsTarif(TmsExtendedModel):
     _path_url = "/tarifs/"
 
     def __init__(self, tarif_name, tarif_tag, enabled, provider=None, id=None):
+        """
+
+        :param tarif_name: str
+        :param tarif_tag: int
+        :param enabled: bool
+        :param provider: int
+        :param id: int
+        """
         self.id = id
         self.tarif_name = tarif_name
         self.provider = provider

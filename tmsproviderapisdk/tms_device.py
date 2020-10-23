@@ -7,6 +7,24 @@ class TmsDevice(TmsExtendedModel):
     def __init__(self, unique_id, device_id=None, ipaddr=None, mac=None, remote_custom_field=None, comment=None,
                  last_online=None, last_fw_ver=None, first_online=None, use_nat=False, operation_system=None,
                  udpxy_addr=None, device_type=None, provider=None, account=None):
+        """
+
+        :param unique_id: str
+        :param device_id: int
+        :param ipaddr: str
+        :param mac: str
+        :param remote_custom_field: str
+        :param comment: str
+        :param last_online: str
+        :param last_fw_ver: str
+        :param first_online: str
+        :param use_nat: bool
+        :param operation_system: str
+        :param udpxy_addr: str
+        :param device_type: int
+        :param provider: int
+        :param account: int
+        """
         self.unique_id = unique_id
         self.id = device_id
         self.ipaddr = ipaddr

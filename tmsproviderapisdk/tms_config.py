@@ -4,6 +4,13 @@ import base64
 class TmsConfig:
 
     def __init__(self, base_url, username=None, password=None, token=None):
+        """
+
+        :type base_url: str
+        :type username: str
+        :type password: str
+        :type token: str
+        """
         self.base_url = base_url
         self.username = username
         self.password = password

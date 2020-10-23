@@ -2,11 +2,27 @@ from typing import Optional, List
 from tmsproviderapisdk.tms_extended_model import TmsExtendedModel
 import hashlib
 
+
 class TmsAccount(TmsExtendedModel):
     _path_url = '/accounts/'
 
     def __init__(self, login, fullname, account_desc="", contract_info="", devices_per_account_limit=None, enabled=True,
                  main_address="", pin_md5="", remote_custom_field="", provider=None, id=None):
+        """
+
+        :type pin_md5: str
+        :param login: str
+        :param fullname: str
+        :param account_desc: str
+        :param contract_info: str
+        :param devices_per_account_limit: int
+        :param enabled: bool
+        :param main_address: str
+        :param pin_md5: str
+        :param remote_custom_field: str
+        :param provider: int
+        :param id: int
+        """
         self.login = login
         self.fullname = fullname
         self.account_desc = account_desc
@@ -25,7 +41,6 @@ class TmsAccount(TmsExtendedModel):
         pin_md5 = hash_password.hexdigest()
 
         return pin_md5
-
 
     @staticmethod
     def _dict_to_object(account_dict: dict) -> object:

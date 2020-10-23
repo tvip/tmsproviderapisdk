@@ -3,7 +3,7 @@ from tmsproviderapisdk import TmsAccount
 from tmsproviderapisdk.tms_exceptions import ApiHTTPError
 
 # Configure
-config = TmsConfig('http://ms-test.o.tvip.ru', 'den-test-api', 'dentest-api', None)
+config = TmsConfig('https://tms.example.com', 'provider_admin', 'provider_password')
 
 # apply config
 TmsConfigHolder.apply(config)

@@ -1,10 +1,18 @@
-from tmsproviderapisdk.tms_base_model import TmsBaseModel
+from tmsproviderapisdk.tms_extended_model import TmsExtendedModel
 
 
-class TmsTarifTag(TmsBaseModel):
+class TmsTarifTag(TmsExtendedModel):
     _path_url = "/tarif_tags/"
 
     def __init__(self, enabled, name, provider, id=None, position=None):
+        """
+
+        :param enabled: bool
+        :param name: str
+        :param provider: int
+        :param id: int
+        :param position: int
+        """
         self.enabled = enabled
         self.name = name
         self.provider = provider

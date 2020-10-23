@@ -6,6 +6,15 @@ class TmsChannel(TmsBaseModel):
 
     def __init__(self, id: int, name: str = "", text_name: str = "", display_number: str = "", logo_url: str = "",
                  enabled: bool = False, time_shift_depth: int = None):
+        """
+        :type id: int
+        :type name: str
+        :type text_name: str
+        :type display_number: str
+        :type logo_url: str
+        :type enabled: bool
+        :type time_shift_depth: int
+        """
         self.id = id
         self.name = name
         self.text_name = text_name

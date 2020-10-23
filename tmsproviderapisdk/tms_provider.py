@@ -7,7 +7,16 @@ class TmsProvider(TmsBaseModel):
 
     def __init__(self, id=None, region_tag=None, provider_name=None, provider_comment=None,
                  enabled=False, logo_url=None, devices_per_account_limit=None):
+        """
 
+        :param id: int
+        :param region_tag: int
+        :param provider_name: str
+        :param provider_comment: str
+        :param enabled: bool
+        :param logo_url: string
+        :param devices_per_account_limit: int
+        """
         self.id = id
         self.region_tag = region_tag
         self.provider_name = provider_name
