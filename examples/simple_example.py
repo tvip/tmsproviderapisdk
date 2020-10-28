@@ -70,3 +70,21 @@ except ApiHTTPError as e:
 else:
     # print subscription to stout
     print(subscription)
+
+# Example functions
+
+# Get all accounts with paging
+
+def get_accounts_with_paging():
+
+    accounts, total = TmsAccount.get_list()
+
+    if total > len(accounts):
+        while True:
+            if total == len(accounts):
+                break
+            page_accounts, _ = TmsAccount.get_list(start=len(accounts), limit=50, sort="id")
+
+            accounts.extend(page_accounts)
+
+    return accounts
