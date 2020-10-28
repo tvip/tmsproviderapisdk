@@ -74,7 +74,6 @@ else:
 # Example functions
 
 # Get all accounts with paging
-
 def get_accounts_with_paging():
 
     accounts, total = TmsAccount.get_list()
