@@ -1,3 +1,4 @@
+from typing import List, Optional, Tuple
 from tmsproviderapisdk.tms_base_model import TmsBaseModel
 
 
@@ -5,18 +6,9 @@ class TmsProvider(TmsBaseModel):
 
     _path_url = "/providers/"
 
-    def __init__(self, id=None, region_tag=None, provider_name=None, provider_comment=None,
-                 enabled=False, logo_url=None, devices_per_account_limit=None):
-        """
+    def __init__(self, id: int = None, region_tag: int = None, provider_name: str = None, provider_comment: str = None,
+                 enabled: bool = False, logo_url: str = None, devices_per_account_limit: int = None):
 
-        :param id: int
-        :param region_tag: int
-        :param provider_name: str
-        :param provider_comment: str
-        :param enabled: bool
-        :param logo_url: string
-        :param devices_per_account_limit: int
-        """
         self.id = id
         self.region_tag = region_tag
         self.provider_name = provider_name
@@ -26,7 +18,7 @@ class TmsProvider(TmsBaseModel):
         self.devices_per_account_limit = devices_per_account_limit
 
     @staticmethod
-    def _dict_to_object(provider_dict):
+    def _dict_to_object(provider_dict: dict) -> object:
         p = TmsProvider(
             id=provider_dict["id"],
             region_tag=provider_dict["region_tag"],
@@ -40,8 +32,10 @@ class TmsProvider(TmsBaseModel):
         return p
 
     @classmethod
-    def get_list(cls, start=0, limit=50, sort="", enabled=None, quick_search=""):
-        providers = super().get_list(start=start, limit=limit, sort=sort, enabled=enabled, quick_search=quick_search)
+    def get_list(cls, start: int = 0, limit: int = 50, sort: str = "", enabled: bool = None,
+                 quick_search: str = "") -> Optional[Tuple[List[object], int]]:
+        providers: Optional[Tuple[List[object], int]] = super().get_list(start=start, limit=limit, sort=sort,
+                                                                         enabled=enabled, quick_search=quick_search)
 
         return providers
 

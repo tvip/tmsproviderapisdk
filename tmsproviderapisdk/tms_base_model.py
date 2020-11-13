@@ -1,7 +1,7 @@
 import json
 import requests
 from tmsproviderapisdk.tms_config import TmsConfigHolder
-from tmsproviderapisdk.tms_exceptions import ApiHTTPError
+from tmsproviderapisdk.tms_exceptions import ApiHTTPError, NotJsonDataError
 from typing import List, Optional, Tuple
 
 
@@ -25,7 +25,12 @@ class TmsBaseModel:
         if r.status_code != 200:
             raise ApiHTTPError("Get {}".format(cls.__name__), r.status_code, r.text)
 
-        resp = json.loads(r.text)
+        try:
+            resp = json.loads(r.text)
+        except Exception as e:
+            raise NotJsonDataError("Received non json data")
+            return None
+
         o = cls._dict_to_object(resp)
 
         return o
@@ -54,7 +59,7 @@ class TmsBaseModel:
         try:
             resp = json.loads(r.text)
         except Exception as e:
-            print(e)
+            raise NotJsonDataError("Received non json data")
             return None
 
         if not resp.get("data"):

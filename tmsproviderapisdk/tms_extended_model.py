@@ -1,7 +1,7 @@
 import json
 import requests
 from tmsproviderapisdk.tms_config import TmsConfigHolder
-from tmsproviderapisdk.tms_exceptions import ApiHTTPError, IdEmptyError
+from tmsproviderapisdk.tms_exceptions import ApiHTTPError, IdEmptyError, NotJsonDataError
 from tmsproviderapisdk.tms_base_model import TmsBaseModel
 
 
@@ -21,7 +21,11 @@ class TmsExtendedModel(TmsBaseModel):
         if r.status_code != 200:
             raise ApiHTTPError("Create {}".format(self.__class__.__name__), r.status_code, r.text)
 
-        resp = json.loads(r.text)
+        try:
+            resp = json.loads(r.text)
+        except Exception as e:
+            raise NotJsonDataError("Received non json data")
+            return None
 
         o = self._dict_to_object(resp)
 
@@ -43,7 +47,12 @@ class TmsExtendedModel(TmsBaseModel):
         if r.status_code != 200:
             raise ApiHTTPError("Update {}".format(self.__class__.__name__), r.status_code, r.text)
 
-        resp = json.loads(r.text)
+        try:
+            resp = json.loads(r.text)
+        except Exception as e:
+            raise NotJsonDataError("Received non json data")
+            return None
+
         o = self._dict_to_object(resp)
 
         return o

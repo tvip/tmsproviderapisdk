@@ -1,4 +1,4 @@
-from typing import Optional, List
+from typing import Optional, List, Tuple
 from tmsproviderapisdk.tms_extended_model import TmsExtendedModel
 import hashlib
 
@@ -6,27 +6,14 @@ import hashlib
 class TmsAccount(TmsExtendedModel):
     _path_url = '/accounts/'
 
-    def __init__(self, login, fullname, account_desc="", contract_info="", devices_per_account_limit=None, enabled=True,
-                 main_address="", pin_md5="", remote_custom_field="", provider=None, id=None):
-        """
+    def __init__(self, login: str, fullname: str, account_desc: str = "", contract_info: str = "",
+                 devices_per_account_limit: int = None, enabled: bool = True, main_address: str = "", pin_md5: str = "",
+                 remote_custom_field: str = "", provider: int = None, id: int = None):
 
-        :type pin_md5: str
-        :param login: str
-        :param fullname: str
-        :param account_desc: str
-        :param contract_info: str
-        :param devices_per_account_limit: int
-        :param enabled: bool
-        :param main_address: str
-        :param pin_md5: str
-        :param remote_custom_field: str
-        :param provider: int
-        :param id: int
-        """
         self.login = login
         self.fullname = fullname
         self.account_desc = account_desc
-        self.contact_info = contract_info
+        self.contract_info = contract_info
         self.devices_per_account_limit = devices_per_account_limit
         self.enabled = enabled
         self.main_address = main_address
@@ -36,7 +23,7 @@ class TmsAccount(TmsExtendedModel):
         self.id = id
 
     @staticmethod
-    def get_md5_pin(clear_text_password):
+    def get_md5_pin(clear_text_password: str) -> str:
         hash_password = hashlib.md5(clear_text_password.encode())
         pin_md5 = hash_password.hexdigest()
 
@@ -60,11 +47,13 @@ class TmsAccount(TmsExtendedModel):
 
     @classmethod
     def get_list(cls, start: int = 0, limit: int = 50, sort: str = "", provider: int = None, enabled: bool = None,
-                 login: int = None, remote_custom_field: str = "", quick_search: str = "") -> List[object]:
+                 login: int = None, remote_custom_field: str = "",
+                 quick_search: str = "") -> Optional[Tuple[List[object], int]]:
 
-        accounts: Optional[List[None]] = super().get_list(start, limit, sort=sort, provider=provider, enabled=enabled,
-                                                          login=login, remote_custom_field=remote_custom_field,
-                                                          quick_search=quick_search)
+        accounts: Optional[Tuple[List[object], int]] = super().get_list(start, limit, sort=sort, provider=provider,
+                                                                        enabled=enabled, login=login,
+                                                                        remote_custom_field=remote_custom_field,
+                                                                        quick_search=quick_search)
 
         return accounts
 
@@ -76,7 +65,7 @@ main_address:{}, account_desc:{}, provider:{}, enabled:{}, devices_per_account_l
             self.fullname,
             self.remote_custom_field,
             self.pin_md5,
-            self.contact_info,
+            self.contract_info,
             self.main_address,
             self.account_desc,
             self.provider,

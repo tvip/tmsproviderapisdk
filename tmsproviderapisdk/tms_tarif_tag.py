@@ -1,18 +1,12 @@
+from typing import List, Optional, Tuple
 from tmsproviderapisdk.tms_extended_model import TmsExtendedModel
 
 
 class TmsTarifTag(TmsExtendedModel):
     _path_url = "/tarif_tags/"
 
-    def __init__(self, enabled, name, provider, id=None, position=None):
-        """
+    def __init__(self, enabled: bool, name: str, provider: int, id: int = None, position: int = None):
 
-        :param enabled: bool
-        :param name: str
-        :param provider: int
-        :param id: int
-        :param position: int
-        """
         self.enabled = enabled
         self.name = name
         self.provider = provider
@@ -20,7 +14,7 @@ class TmsTarifTag(TmsExtendedModel):
         self.position = position
 
     @staticmethod
-    def _dict_to_object(tarif_tag_dict):
+    def _dict_to_object(tarif_tag_dict: dict) -> object:
         tarif_tag = TmsTarifTag(
             id=tarif_tag_dict["id"],
             name=tarif_tag_dict["name"],
@@ -32,7 +26,8 @@ class TmsTarifTag(TmsExtendedModel):
         return tarif_tag
 
     @classmethod
-    def get_list(cls, start=0, limit=50, sort="", enabled=None, provider=None, quick_search=""):
+    def get_list(cls, start: int = 0, limit: int = 50, sort: str = "", enabled: bool = None, provider: int = None,
+                 quick_search: str = "") -> Optional[Tuple[List[object], int]]:
 
         tarif_tags = super().get_list(start=start, limit=limit, sort=sort, enabled=enabled, provider=provider,
                                       quick_search=quick_search)
