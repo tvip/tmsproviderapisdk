@@ -37,7 +37,7 @@ class TmsBaseModel:
         query = "?start={}&limit={}".format(start, limit)
 
         for name, value in kwargs.items():
-            if value:
+            if value != '' and value is not None:
                 query += "&{}={}".format(name, value)
 
         try:
