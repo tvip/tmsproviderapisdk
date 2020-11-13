@@ -27,9 +27,8 @@ class TmsBaseModel:
 
         try:
             resp = json.loads(r.text)
-        except Exception as e:
+        except Exception:
             raise NotJsonDataError("Received non json data")
-            return None
 
         o = cls._dict_to_object(resp)
 
@@ -58,9 +57,8 @@ class TmsBaseModel:
 
         try:
             resp = json.loads(r.text)
-        except Exception as e:
+        except Exception:
             raise NotJsonDataError("Received non json data")
-            return None
 
         if not resp.get("data"):
             print("Response not have data, response: {}".format(r.text))

@@ -23,9 +23,8 @@ class TmsExtendedModel(TmsBaseModel):
 
         try:
             resp = json.loads(r.text)
-        except Exception as e:
+        except Exception:
             raise NotJsonDataError("Received non json data")
-            return None
 
         o = self._dict_to_object(resp)
 
@@ -49,9 +48,8 @@ class TmsExtendedModel(TmsBaseModel):
 
         try:
             resp = json.loads(r.text)
-        except Exception as e:
+        except Exception:
             raise NotJsonDataError("Received non json data")
-            return None
 
         o = self._dict_to_object(resp)
 
