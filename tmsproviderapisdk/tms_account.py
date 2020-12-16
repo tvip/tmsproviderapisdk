@@ -8,7 +8,7 @@ class TmsAccount(TmsExtendedModel):
 
     def __init__(self, login: str, fullname: str, account_desc: str = "", contract_info: str = "",
                  devices_per_account_limit: int = None, enabled: bool = True, main_address: str = "", pin_md5: str = "",
-                 remote_custom_field: str = "", provider: int = None, id: int = None):
+                 remote_custom_field: str = "", provider: int = None, id: int = None, region_tag=None):
 
         self.login = login
         self.fullname = fullname
@@ -21,6 +21,7 @@ class TmsAccount(TmsExtendedModel):
         self.remote_custom_field = remote_custom_field
         self.provider = provider
         self.id = id
+        self.region_tag = region_tag
 
     @staticmethod
     def get_md5_pin(clear_text_password: str) -> str:
@@ -41,7 +42,8 @@ class TmsAccount(TmsExtendedModel):
                                    pin_md5=account_dict["pin_md5"],
                                    remote_custom_field=account_dict["remote_custom_field"],
                                    provider=account_dict["provider"],
-                                   id=account_dict["id"])
+                                   id=account_dict["id"],
+                                   region_tag=account_dict["region_tag"])
 
         return a
 
@@ -59,7 +61,7 @@ class TmsAccount(TmsExtendedModel):
 
     def __str__(self):
         return """id:{}, login:{}, fullname:{}, remote_custom_field:{}, pin_md5:{}, contract_info:{},\
-main_address:{}, account_desc:{}, provider:{}, enabled:{}, devices_per_account_limit:{}""".format(
+ main_address:{}, account_desc:{}, provider:{}, enabled:{}, devices_per_account_limit:{}, region_tag:{}""".format(
             self.id,
             self.login,
             self.fullname,
@@ -70,5 +72,6 @@ main_address:{}, account_desc:{}, provider:{}, enabled:{}, devices_per_account_l
             self.account_desc,
             self.provider,
             self.enabled,
-            self.devices_per_account_limit
+            self.devices_per_account_limit,
+            self.region_tag
         )
