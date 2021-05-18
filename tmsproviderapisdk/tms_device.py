@@ -5,12 +5,13 @@ from tmsproviderapisdk.tms_extended_model import TmsExtendedModel
 class TmsDevice(TmsExtendedModel):
     _path_url = "/devices/"
 
-    def __init__(self, unique_id: str, device_id: int = None, ipaddr: str = None, mac: str = None,
+    def __init__(self, unique_id: str, account: int, device_id: int = None, ipaddr: str = None, mac: str = None,
                  remote_custom_field: str = None, comment: str = None, last_online: str = None, last_fw_ver: str = None,
                  first_online: str = None, use_nat: bool = False, operation_system: str = None, udpxy_addr: str = None,
-                 device_type: int = None, provider: int = None, account: int = None):
+                 device_type: int = None, provider: int = None):
 
         self.unique_id = unique_id
+        self.account = account
         self.id = device_id
         self.ipaddr = ipaddr
         self.mac = mac
@@ -24,7 +25,6 @@ class TmsDevice(TmsExtendedModel):
         self.udpxy_addr = udpxy_addr
         self.device_type = device_type
         self.provider = provider
-        self.account = account
 
     @staticmethod
     def _dict_to_object(device_dict: dict) -> object:
