@@ -5,12 +5,14 @@ from tmsproviderapisdk.tms_extended_model import TmsExtendedModel
 class TmsAccountSubscription(TmsExtendedModel):
     _path_url = "/account_subscriptions/"
 
-    def __init__(self, account: int, start: str, tarif: int, id: int = None, stop: str = None):
+    def __init__(self, account: int, start: str, tarif: int, id: int = None, stop: str = None,
+                 time_shift_depth: int = None):
         self.account = account
         self.start = start
         self.tarif = tarif
         self.id = id
         self.stop = stop
+        self.time_shift_depth = time_shift_depth
 
     @staticmethod
     def _dict_to_object(as_dict: dict) -> object:
@@ -19,8 +21,10 @@ class TmsAccountSubscription(TmsExtendedModel):
             id=as_dict["id"],
             start=as_dict["start"],
             stop=as_dict["stop"],
-            tarif=as_dict["tarif"]
+            tarif=as_dict["tarif"],
+            time_shift_depth=as_dict["time_shift_depth"]
         )
+
         return account_subscription
 
     @classmethod
@@ -32,10 +36,11 @@ class TmsAccountSubscription(TmsExtendedModel):
         return account_subscriptions
 
     def __str__(self):
-        return """id:{}, account:{}, start:{}, stop:{}, tarif:{}""".format(
+        return """id:{}, account:{}, start:{}, stop:{}, tarif:{}, time_shift_depth:{}""".format(
             self.id,
             self.account,
             self.start,
             self.stop,
-            self.tarif
+            self.tarif,
+            self.time_shift_depth
         )
