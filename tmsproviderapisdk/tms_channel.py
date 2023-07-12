@@ -6,7 +6,7 @@ class TmsChannel(TmsBaseModel):
     _path_url = "/channels/"
 
     def __init__(self, id: int, name: str = "", text_name: str = "", display_number: str = "", logo_url: str = "",
-                 enabled: bool = False, time_shift_depth: int = None):
+                 enabled: bool = False, time_shift_depth: int = None, favorites: List = None):
 
         self.id = id
         self.name = name
@@ -15,6 +15,7 @@ class TmsChannel(TmsBaseModel):
         self.logo_url = logo_url
         self.enabled = enabled
         self.time_shift_depth = time_shift_depth
+        self.favorites = favorites
 
     @staticmethod
     def _dict_to_object(channel_dict: dict) -> object:
@@ -25,7 +26,8 @@ class TmsChannel(TmsBaseModel):
             display_number=channel_dict["display_number"],
             logo_url=channel_dict["logo_url"],
             enabled=channel_dict["enabled"],
-            time_shift_depth=channel_dict["time_shift_depth"]
+            time_shift_depth=channel_dict["time_shift_depth"],
+            favorites=channel_dict["favorites"]
         )
         return channel
 
@@ -38,12 +40,13 @@ class TmsChannel(TmsBaseModel):
 
     def __str__(self):
         return """id:{}, name:{}, text_name:{}, display_number:{}, logo_url:{}, \
-            enabled: {}, time_shift_depth: {}""".format(
+            enabled: {}, time_shift_depth: {}, favorites: {}""".format(
                 self.id,
                 self.name,
                 self.text_name,
                 self.display_number,
                 self.logo_url,
                 self.enabled,
-                self.time_shift_depth
+                self.time_shift_depth,
+                self.favorites
             )
