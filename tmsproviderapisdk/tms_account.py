@@ -6,9 +6,23 @@ import hashlib
 class TmsAccount(TmsExtendedModel):
     _path_url = '/accounts/'
 
-    def __init__(self, login: str, fullname: str, account_desc: str = "", contract_info: str = "",
-                 devices_per_account_limit: int = None, enabled: bool = True, main_address: str = "", pin_md5: str = "",
-                 remote_custom_field: str = "", provider: int = None, id: int = None, region_tag=None):
+    def __init__(self,
+                 login: str,
+                 fullname: str,
+                 account_desc: str = "",
+                 contract_info: str = "",
+                 devices_per_account_limit: int = None,
+                 enabled: bool = True,
+                 main_address: str = "",
+                 pin_md5: str = "",
+                 remote_custom_field: str = "",
+                 provider: int = None,
+                 id: int = None,
+                 region_tag: int = None,
+                 last_online: int = None,
+                 created: int = None,
+                 updated: int = None
+                 ):
 
         self.login = login
         self.fullname = fullname
@@ -22,6 +36,9 @@ class TmsAccount(TmsExtendedModel):
         self.provider = provider
         self.id = id
         self.region_tag = region_tag
+        self.last_online = last_online
+        self.created = created
+        self.updated = updated
 
     @staticmethod
     def get_md5_pin(clear_text_password: str) -> str:
@@ -43,17 +60,22 @@ class TmsAccount(TmsExtendedModel):
                                    remote_custom_field=account_dict["remote_custom_field"],
                                    provider=account_dict["provider"],
                                    id=account_dict["id"],
-                                   region_tag=account_dict["region_tag"])
+                                   region_tag=account_dict["region_tag"],
+                                   last_online=account_dict["last_online"],
+                                   created=account_dict["created"],
+                                   updated=account_dict["updated"],
+                                   )
 
         return a
 
     @classmethod
-    def get_list(cls, start: int = 0, limit: int = 50, sort: str = "", provider: int = None, enabled: bool = None,
-                 login: int = None, remote_custom_field: str = "",
+    def get_list(cls, start: int = 0, limit: int = 50, sort: str = "", provider: int = None, region_tag: int = None,
+                 enabled: bool = None, login: int = None, remote_custom_field: str = "",
                  quick_search: str = "") -> Optional[Tuple[List[object], int]]:
 
         accounts: Optional[Tuple[List[object], int]] = super().get_list(start, limit, sort=sort, provider=provider,
-                                                                        enabled=enabled, login=login,
+                                                                        region_tag=region_tag, enabled=enabled,
+                                                                        login=login,
                                                                         remote_custom_field=remote_custom_field,
                                                                         quick_search=quick_search)
 
@@ -61,7 +83,8 @@ class TmsAccount(TmsExtendedModel):
 
     def __str__(self):
         return """id:{}, login:{}, fullname:{}, remote_custom_field:{}, pin_md5:{}, contract_info:{},\
- main_address:{}, account_desc:{}, provider:{}, enabled:{}, devices_per_account_limit:{}, region_tag:{}""".format(
+ main_address:{}, account_desc:{}, provider:{}, enabled:{}, devices_per_account_limit:{}, region_tag:{}, last_online:{},
+ created:{}, updated:{} """.format(
             self.id,
             self.login,
             self.fullname,
@@ -73,5 +96,8 @@ class TmsAccount(TmsExtendedModel):
             self.provider,
             self.enabled,
             self.devices_per_account_limit,
-            self.region_tag
+            self.region_tag,
+            self.last_online,
+            self.created,
+            self.updated
         )
