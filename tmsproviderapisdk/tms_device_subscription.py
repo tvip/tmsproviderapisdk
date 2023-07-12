@@ -5,22 +5,25 @@ from tmsproviderapisdk.tms_extended_model import TmsExtendedModel
 class TmsDeviceSubscription(TmsExtendedModel):
     _path_url = "/device_subscriptions/"
 
-    def __init__(self, device: int, start: str, tarif: int, id: int = None, stop: str = None):
+    def __init__(self, device: int, start: str, tarif: int, id: int = None, stop: str = None,
+                 time_shift_depth: int = None):
 
         self.device = device
         self.start = start
         self.tarif = tarif
         self.id = id
         self.stop = stop
+        self.time_shift_depth = time_shift_depth
 
     @staticmethod
-    def _dict_to_object(as_dict: dict) -> object:
+    def _dict_to_object(ds_dict: dict) -> object:
         device_subscription = TmsDeviceSubscription(
-            device=as_dict["device"],
-            id=as_dict["id"],
-            start=as_dict["start"],
-            stop=as_dict["stop"],
-            tarif=as_dict["tarif"]
+            device=ds_dict["device"],
+            id=ds_dict["id"],
+            start=ds_dict["start"],
+            stop=ds_dict["stop"],
+            tarif=ds_dict["tarif"],
+            time_shift_depth=ds_dict["time_shift_depth"]
         )
         return device_subscription
 
@@ -34,10 +37,11 @@ class TmsDeviceSubscription(TmsExtendedModel):
         return device_subscriptions
 
     def __str__(self):
-        return """id:{}, device:{}, start:{}, stop:{}, tarif:{}""".format(
+        return """id:{}, device:{}, start:{}, stop:{}, tarif:{}, time_shift_depth:{}""".format(
             self.id,
             self.device,
             self.start,
             self.stop,
-            self.tarif
+            self.tarif,
+            self.time_shift_depth
         )
