@@ -15,3 +15,4 @@ from tmsproviderapisdk.tms_tarif import TmsTarif
 from tmsproviderapisdk.tms_tarif_tag import TmsTarifTag
 from tmsproviderapisdk.tms_region import TmsRegion
 from tmsproviderapisdk.tms_account_network import TmsAccountNetwork
+from tmsproviderapisdk.tms_devices_types import TmsDeviceTypes
