@@ -1,3 +1,10 @@
+from pkg_resources import get_distribution, DistributionNotFound
+
+try:
+    __version__ = get_distribution('tmsproviderapisdk').version
+except DistributionNotFound:
+    __version__ = 'unknown'
+
 from tmsproviderapisdk.tms_config import TmsConfig, TmsConfigHolder
 from tmsproviderapisdk.tms_account import TmsAccount
 from tmsproviderapisdk.tms_account_subscription import TmsAccountSubscription

@@ -1,6 +1,5 @@
 import base64
-
-
+from tmsproviderapisdk import __version__
 class TmsConfig:
 
     def __init__(self, base_url: str, username: str = None, password: str = None, token: str = None):
@@ -16,6 +15,9 @@ class TmsConfig:
         self.base_url = self.base_url + '/api/provider'
 
         headers = {
+            'User-Agent': 'Tmsproviderapisdk v:{}'.format(
+                __version__
+            ),
             'Content-Type': 'application/json',
             'Accept': 'application/json'
         }
